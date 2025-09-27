@@ -10,9 +10,17 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("SeTtInGs"),centerTitle: true,),
-      body: Expanded(child: Row(
+      body: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary,
+          borderRadius: BorderRadius.circular(8)
+        ),
+        padding: EdgeInsets.all(20),
+        margin: EdgeInsets.all(25),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Let there be Light"),
+          Text("Let there be Light", style: TextStyle(fontWeight: FontWeight.bold),),
           
           CupertinoSwitch(
             value: Provider.of<ThemeProvider>(context, listen: false).isLightMode, 
