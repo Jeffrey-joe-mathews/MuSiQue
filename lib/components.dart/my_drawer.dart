@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musique/pages/settings_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -11,13 +12,13 @@ class MyDrawer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Logo
-          DrawerHeader(child: Icon(
-            Icons.multitrack_audio_sharp,
-            size: 45,
-            color: Theme.of(context).colorScheme.inversePrimary
-            )
+          DrawerHeader(
+            child: Icon(
+              Icons.multitrack_audio_sharp,
+              size: 45,
+              color: Theme.of(context).colorScheme.inversePrimary,
+            ),
           ),
-
 
           // homw
           Padding(
@@ -28,12 +29,12 @@ class MyDrawer extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(Icons.home),
-                    const SizedBox(width: 8,),
-                    const Text("H o M e")
+                    const SizedBox(width: 8),
+                    const Text("H o M e"),
                   ],
                 ),
               ),
-              onTap:() => Navigator.pop(context),
+              onTap: () => Navigator.pop(context),
             ),
           ),
 
@@ -44,13 +45,21 @@ class MyDrawer extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(Icons.settings),
-                  const SizedBox(width: 8,),
-                  const Text("S e T t I n G s")
+                  const SizedBox(width: 8),
+                  const Text("S e T t I n G s"),
                 ],
               ),
             ),
-            onTap: (){},
-          )
+            onTap: () {
+              // pop the drawer
+              Navigator.pop(context);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsPage()),
+              );
+            },
+          ),
 
           // profile
         ],
