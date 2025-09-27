@@ -3,7 +3,7 @@ import 'package:musique/themes/dark_mode.dart';
 import 'package:musique/themes/light_mode.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeData _themeData = lightMode;
+  ThemeData _themeData = darkMode;
 
   // get theme
   ThemeData get themeData => _themeData;
@@ -23,10 +23,10 @@ class ThemeProvider extends ChangeNotifier {
   // toggle theme
   void toggleTheme () {
     if (isLightMode) {
-      themeData = lightMode;
+      themeData = darkMode;
     }
     else {
-      themeData = darkMode;
+      themeData = lightMode;
     }
   }
 }
