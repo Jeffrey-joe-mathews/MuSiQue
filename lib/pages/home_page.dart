@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:musique/components.dart/my_drawer.dart';
+import 'package:musique/components/my_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

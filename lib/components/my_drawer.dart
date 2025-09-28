@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:musique/pages/playlist_page.dart';
 import 'package:musique/pages/settings_page.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -57,6 +58,30 @@ class MyDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => SettingsPage()),
+              );
+            },
+          ),
+
+
+          // playlist
+          ListTile(
+            title: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.music_note),
+                  const SizedBox(width: 8),
+                  const Text("TeSt PlAyLiSt 1"),
+                ],
+              ),
+            ),
+            onTap: () {
+              // pop the drawer
+              Navigator.pop(context);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PlaylistPage()),
               );
             },
           ),
