@@ -3,18 +3,18 @@
       "songName": "As the World Caves In",
       "artistName": "Matt Maltese",
       "audioPath": "audio/Matt Maltese - As the World Caves In [Official Audio] (Copy).opus",
-      "imagePath": "images/template.webp"
+      "imagePath": "assets/images/template.webp"
     },
     {
       "songName": "Pluto Projector",
       "artistName": "Rex Orange County",
       "audioPath": "audio/wwd.mp3juice.blog - Rex Orange County - Pluto Projector (Official Audio) (320 KBps) (Copy).mp3",
-      "imagePath": "images/template.webp"
+      "imagePath": "assets/images/template.webp"
     },
     {
       "songName": "Baka Mitai (ばかみたい)",
       "artistName": "Yakuza 0 OST",
       "audioPath": "audio/wwd.mp3juice.blog - Yakuza 0 OST- Baka Mitai ばかみたい (320 KBps).mp3",
-      "imagePath": "images/template.webp"
+      "imagePath": "assets/images/template.webp"
     }
 ]
