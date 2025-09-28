@@ -15,12 +15,12 @@ class SettingsPage extends StatelessWidget {
           color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(8)
         ),
-        padding: EdgeInsets.all(20),
-        margin: EdgeInsets.all(25),
+        padding: const EdgeInsets.all(20),
+        margin: const EdgeInsets.all(25),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Let there be Light", style: TextStyle(fontWeight: FontWeight.bold),),
+          const Text("Let there be Light", style: TextStyle(fontWeight: FontWeight.bold),),
           
           CupertinoSwitch(
             value: Provider.of<ThemeProvider>(context, listen: false).isLightMode, 
