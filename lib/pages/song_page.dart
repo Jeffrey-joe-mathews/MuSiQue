@@ -15,7 +15,13 @@ class _SongPageState extends State<SongPage> {
   Widget build(BuildContext context) {
     return Consumer<PlaylistProvider>(
       builder:
-          (context, value, child) => Scaffold(
+          (context, value, child) {
+
+            final playlist = value.playlist;
+
+            final currentSong = playlist[value.currentSongIndex ?? 0];
+
+            return Scaffold(
             backgroundColor: Theme.of(context).colorScheme.surface,
             body: SafeArea(
               child: Column(
@@ -27,13 +33,13 @@ class _SongPageState extends State<SongPage> {
                       children: [
                         // back button
                         IconButton(
-                          onPressed:() => Navigator.pop(context),
+                          onPressed: () => Navigator.pop(context),
                           icon: const Icon(Icons.arrow_back),
                         ),
 
                         // title of the song
                         Text(
-                          "SoNg NaMe",
+                          "Song Name",
                           style: const TextStyle(
                             fontSize: 16,
                             overflow: TextOverflow.fade,
@@ -49,131 +55,146 @@ class _SongPageState extends State<SongPage> {
                     ),
                   ),
 
-                  Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: MusiquePlayer(
-                      child: Column(
-                        children: [
-                          // song image
-                          ClipRRect(
-                            borderRadius: BorderRadiusGeometry.circular(8),
-                            child: Image.asset("assets/images/template.webp"),
-                          ),
+                  Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: MusiquePlayer(
+                          child: Column(
+                            children: [
+                              // song image
+                              ClipRRect(
+                                borderRadius: BorderRadiusGeometry.circular(8),
+                                child: Image.asset(
+                                  currentSong.imagePath,
+                                ),
+                              ),
 
-                          // song and artist name
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8,
-                              horizontal: 8,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                              // song and artist name
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 8,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "song name",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        overflow: TextOverflow.fade,
-                                      ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          currentSong.songName,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            overflow: TextOverflow.fade,
+                                          ),
+                                        ),
+
+                                        Text(
+                                          currentSong.artistName,
+                                          style: TextStyle(
+                                            overflow: TextOverflow.fade,
+                                          ),
+                                        ),
+                                      ],
                                     ),
 
-                                    Text(
-                                      "artist name",
-                                      style: TextStyle(
-                                        overflow: TextOverflow.fade,
-                                      ),
-                                    ),
+                                    Icon(Icons.favorite, color: Colors.red),
                                   ],
                                 ),
-
-                                Icon(Icons.favorite, color: Colors.red),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
+                        ),
+                      ),
+
+                      // song duration progress
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          // start time
+                          Text("0:00"),
+                          // shuffle
+                          Icon(Icons.shuffle_rounded),
+                          // repeat
+                          Icon(Icons.repeat, color: Colors.green),
+                          // end time
+                          Text("3:21"),
                         ],
                       ),
-                    ),
-                  ),
 
-                  // song duration progress
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // start time
-                      Text("0:00"),
-                      // shuffle
-                      Icon(Icons.shuffle_rounded),
-                      // repeat
-                      Icon(Icons.repeat, color: Colors.green,),
-                      // end time
-                      Text("3:21"),
+                      // slider
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 25,
+                          vertical: 8,
+                        ),
+                        child: SliderTheme(
+                          data: SliderThemeData(
+                            thumbShape: SliderComponentShape.noThumb,
+                          ),
+                          child: Slider(
+                            min: 0,
+                            max: 100,
+                            value: 50,
+                            activeColor: Colors.green,
+                            inactiveColor:
+                                Theme.of(context).colorScheme.secondary,
+                            onChanged: (value) {},
+                          ),
+                        ),
+                      ),
+
+                      // controls
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                        child: Row(
+                          children: [
+                            // prev
+                            Expanded(
+                              child: GestureDetector(
+                                child: MusiquePlayer(
+                                  child: Icon(Icons.skip_previous_outlined),
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(width: 20),
+                            // play/pause
+                            Expanded(
+                              flex: 2,
+                              child: GestureDetector(
+                                child: MusiquePlayer(
+                                  child: Icon(Icons.play_arrow_outlined),
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(width: 20),
+                            // next
+                            Expanded(
+                              child: GestureDetector(
+                                child: MusiquePlayer(
+                                  child: Icon(Icons.skip_next_outlined),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
 
-                  // slider
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
-                    child: SliderTheme(
-                      data: SliderThemeData(
-                        thumbShape: SliderComponentShape.noThumb,
-                      ),
-                      child: Slider(
-                        min: 0,
-                        max: 100,
-                        value: 50, 
-                        activeColor: Colors.green,
-                        inactiveColor: Theme.of(context).colorScheme.secondary,
-                        onChanged: (value) {},
-                      ),
-                    ),
-                  ),
-
-                  // controls
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Row(
-                      children: [
-                        // prev
-                        Expanded(
-                          child: GestureDetector(
-                            child: MusiquePlayer(
-                              child: Icon(Icons.skip_previous_outlined)
-                            )
-                          ),
-                        ),
-
-                        const SizedBox(width: 20,),
-                        // play/pause
-                        Expanded(
-                          flex: 2,
-                          child: GestureDetector(
-                            child: MusiquePlayer(
-                              child: Icon(Icons.play_arrow_outlined)
-                            )
-                          ),
-                        ),
-
-                        const SizedBox(width: 20,),
-                        // next
-                        Expanded(
-                          child: GestureDetector(
-                            child: MusiquePlayer(
-                              child: Icon(Icons.skip_next_outlined)
-                            )
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-
+                  // till here
                 ],
               ),
             ),
-          ),
+          );
+          }
     );
   }
 }
