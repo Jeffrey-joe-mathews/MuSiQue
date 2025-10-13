@@ -67,7 +67,7 @@ class PlaylistProvider extends ChangeNotifier {
         currentSongIndex = (_currentSongIndex! - 1)%_playlist.length;
     }
     else {
-      _currentDuration = Duration.zero;
+      seek(Duration.zero);
     }
     notifyListeners();
   }

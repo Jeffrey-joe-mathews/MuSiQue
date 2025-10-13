@@ -11,6 +11,15 @@ class SongPage extends StatefulWidget {
 }
 
 class _SongPageState extends State<SongPage> {
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$minutes:$seconds";
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Consumer<PlaylistProvider>(
@@ -117,13 +126,13 @@ class _SongPageState extends State<SongPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           // start time
-                          Text("0:00"),
+                          Text(formatDuration(value.currentDuration)),
                           // shuffle
                           Icon(Icons.shuffle_rounded),
                           // repeat
                           Icon(Icons.repeat, color: Colors.green),
                           // end time
-                          Text("3:21"),
+                          Text(formatDuration(value.totalDuration)),
                         ],
                       ),
 
@@ -139,12 +148,19 @@ class _SongPageState extends State<SongPage> {
                           ),
                           child: Slider(
                             min: 0,
-                            max: 100,
-                            value: 50,
+                            max: value.totalDuration.inSeconds.toDouble(),
+                            value: value.currentDuration.inSeconds.clamp(0, value.totalDuration.inSeconds).toDouble(),
                             activeColor: Colors.green,
                             inactiveColor:
                                 Theme.of(context).colorScheme.secondary,
-                            onChanged: (value) {},
+                            onChanged: (double double) {
+                              // when the user is dragging the slider around 
+                            },
+                            onChangeEnd:(double double) {
+                              // sliding has finished, we g to that position in the song
+                              value.seek(Duration(seconds: double.toInt()));
+                            },
+                            
                           ),
                         ),
                       ),
@@ -157,6 +173,7 @@ class _SongPageState extends State<SongPage> {
                             // prev
                             Expanded(
                               child: GestureDetector(
+                                onTap:() => value.skipPrevious(),
                                 child: MusiquePlayer(
                                   child: Icon(Icons.skip_previous_outlined),
                                 ),
@@ -168,8 +185,9 @@ class _SongPageState extends State<SongPage> {
                             Expanded(
                               flex: 2,
                               child: GestureDetector(
+                                onTap: () => value.pauseOrPlay(),
                                 child: MusiquePlayer(
-                                  child: Icon(Icons.play_arrow_outlined),
+                                  child: Icon(!value.isPlaying ? Icons.play_arrow_outlined : Icons.pause_outlined),
                                 ),
                               ),
                             ),
@@ -178,6 +196,7 @@ class _SongPageState extends State<SongPage> {
                             // next
                             Expanded(
                               child: GestureDetector(
+                                onTap: () => value.skipNext(),
                                 child: MusiquePlayer(
                                   child: Icon(Icons.skip_next_outlined),
                                 ),
