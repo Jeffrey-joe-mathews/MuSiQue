@@ -37,6 +37,9 @@ dependencies:
   provider: ^6.1.5+1
   audioplayers: ^6.5.1
   google_nav_bar: ^5.0.7
+  http: ^1.5.0
+  lottie: ^3.3.2
+  html_unescape: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +67,7 @@ flutter:
   assets:
     - assets/audio/
     - assets/images/
+    - assets/animations/
     - assets/songs.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

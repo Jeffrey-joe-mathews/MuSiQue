@@ -29,7 +29,12 @@ class PlaylistProvider extends ChangeNotifier {
   void play() async {
     final String path = _playlist[_currentSongIndex!].audioPath;
     _audioPlayer.stop();
-    _audioPlayer.play(AssetSource(path));
+    if (path.startsWith("http")) {
+      _audioPlayer.play(UrlSource(path));
+    }
+    else {
+      _audioPlayer.play(AssetSource(path));
+    }
     _isPlaying = true;
     notifyListeners();
   }
@@ -123,6 +128,12 @@ class PlaylistProvider extends ChangeNotifier {
       play();
     } 
 
+    notifyListeners();
+  }
+
+  void clearCurrentSong () {
+    _audioPlayer.stop();
+    _currentSongIndex = null;
     notifyListeners();
   }
 
