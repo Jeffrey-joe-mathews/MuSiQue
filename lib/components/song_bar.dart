@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:musique/models/playlist_provider.dart';
+import 'package:musique/pages/song_page.dart';
 import 'package:provider/provider.dart';
 
 class SongBar extends StatefulWidget {
@@ -32,7 +33,8 @@ class _SongBarState extends State<SongBar> {
                 value.clearCurrentSong();
               });
           },
-          onTap:() {
+          onTap:() {  
+            Navigator.push(context, MaterialPageRoute(builder:(context) => const SongPage() ));
             // TODO: navigate to song page when tapped
           },
           child: Container(
@@ -47,12 +49,24 @@ class _SongBarState extends State<SongBar> {
                 // song image on the left because it looks cool that way
                 ClipRRect(
                   borderRadius: BorderRadiusGeometry.circular(4),
-                  child: Image.asset(
+                  // child: Image.asset(
+                  //   currentSong.imagePath,
+                  //   width: 40,
+                  //   height: 40,
+                  //   fit: BoxFit.cover,
+                  //   ),
+                  child: currentSong.imagePath.startsWith("http") ? Image.network(
+                    currentSong.imagePath,
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                    ) : Image.asset(
                     currentSong.imagePath,
                     width: 40,
                     height: 40,
                     fit: BoxFit.cover,
                     ),
+                  
                 ),
 
                 const SizedBox(width: 10,),

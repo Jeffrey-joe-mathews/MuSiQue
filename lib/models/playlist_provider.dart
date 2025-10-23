@@ -137,6 +137,12 @@ class PlaylistProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setPlaylist(List<Song> newPlaylist) {
+    _playlist = newPlaylist;
+    notifyListeners();
+  }
+
+
   Future<void> loadSongs() async {
     final String response = await rootBundle.loadString('assets/songs.json');
     final List<dynamic> data = jsonDecode(response);

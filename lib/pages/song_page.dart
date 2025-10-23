@@ -73,13 +73,33 @@ class _SongPageState extends State<SongPage> {
                           child: Column(
                             children: [
                               // song image
-                              ClipRRect(
-                                borderRadius: BorderRadiusGeometry.circular(8),
-                                child: Image.asset(
-                                  currentSong.imagePath,
-                                ),
-                              ),
+                              // ClipRRect(
+                              //   borderRadius: BorderRadiusGeometry.circular(8),
+                              //   child: currentSong.imagePath.startsWith("http") ? Image.network(currentSong.imagePath) : Image.asset(currentSong.imagePath),
+                              //   ),
+                             LayoutBuilder(
+                                builder: (context, constraints) {
+                                  final maxWidth = constraints.maxWidth;
 
+                                  return ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: SizedBox(
+                                      width: maxWidth,
+                                      height: maxWidth, // same as width → square
+                                      child: currentSong.imagePath.startsWith("http")
+                                          ? Image.network(
+                                              currentSong.imagePath,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Image.asset(
+                                              currentSong.imagePath,
+                                              fit: BoxFit.cover,
+                                            ),
+                                    ),
+                                  );
+                                },
+                              ),
+ 
                               // song and artist name
                               Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -90,27 +110,33 @@ class _SongPageState extends State<SongPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          currentSong.songName,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                            overflow: TextOverflow.fade,
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            currentSong.songName,
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
-                                        ),
-
-                                        Text(
-                                          currentSong.artistName,
-                                          style: TextStyle(
-                                            overflow: TextOverflow.fade,
+                                      
+                                          Text(
+                                            currentSong.artistName,
+                                            maxLines: 1,
+                                            style: TextStyle(
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
+
+                                    const SizedBox(width: 15,),
 
                                     Icon(Icons.favorite, color: Colors.red),
                                   ],
