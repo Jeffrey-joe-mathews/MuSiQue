@@ -197,10 +197,11 @@ class _SearchPageState extends State<SearchPage> {
                                       context,
                                       listen: false,
                                     );
-                                playlistProvider.setPlaylist([
-                                  song,
-                                ]); // OR playlistProvider.playlist = [song];
-                                playlistProvider.currentSongIndex = 0;
+                                    playlistProvider.enableStreamingMode(true);
+                                    playlistProvider.setPlaylist([
+                                      song,
+                                    ]); // OR playlistProvider.playlist = [song];
+                                    playlistProvider.currentSongIndex = 0;
 
                                 Navigator.push(
                                   context,

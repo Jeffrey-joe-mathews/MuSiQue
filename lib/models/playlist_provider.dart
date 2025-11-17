@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:musique/models/my_song.dart';
 
 class PlaylistProvider extends ChangeNotifier {
+
   List<Song> _playlist = [];
+  List<Song> _streamPlaylist = [];
   
   int? _currentSongIndex;
 
@@ -24,11 +26,21 @@ class PlaylistProvider extends ChangeNotifier {
 
   // initially not playing or playing
   bool _isPlaying = false;
+  bool _isStreaming = false;
+
+  void enableStreamingMode(bool value) {
+    if (_isStreaming == value) return;
+    _isStreaming = value;
+    _currentSongIndex = null;
+    notifyListeners();
+  }
+
 
   // play the song
   void play() async {
-    final String path = _playlist[_currentSongIndex!].audioPath;
-    _audioPlayer.stop();
+    if (_currentSongIndex == null || activeList.isEmpty) return;
+    final String path = activeList[_currentSongIndex!].audioPath;
+    await _audioPlayer.stop();
     if (path.startsWith("http")) {
       _audioPlayer.play(UrlSource(path));
     }
@@ -67,9 +79,9 @@ class PlaylistProvider extends ChangeNotifier {
 
   // skip previous
   void skipPrevious() async {
-    if (_playlist.isEmpty || _currentSongIndex == null) return;
+    if (activeList.isEmpty || _currentSongIndex == null) return;
     if (_currentDuration.inSeconds < 5) {
-        currentSongIndex = (_currentSongIndex! - 1)%_playlist.length;
+        currentSongIndex = (_currentSongIndex! - 1)%activeList.length;
     }
     else {
       seek(Duration.zero);
@@ -79,8 +91,8 @@ class PlaylistProvider extends ChangeNotifier {
 
   // skip next
   void skipNext() {
-    if(_currentSongIndex != null && _playlist.isNotEmpty) {
-      currentSongIndex = (_currentSongIndex! + 1) % _playlist.length;
+    if(_currentSongIndex != null && activeList.isNotEmpty) {
+      currentSongIndex = (_currentSongIndex! + 1) % activeList.length;
     }
   }
 
@@ -117,6 +129,8 @@ class PlaylistProvider extends ChangeNotifier {
   List<Song> get playlist => _playlist;
   int? get currentSongIndex => _currentSongIndex;
   bool get isPlaying => _isPlaying;
+  bool get isStreaming => _isStreaming;
+  List<Song> get activeList => _isStreaming ? _streamPlaylist : _playlist;
   Duration get currentDuration => _currentDuration;
   Duration get totalDuration => _totalDuration;
 
@@ -138,7 +152,12 @@ class PlaylistProvider extends ChangeNotifier {
   }
 
   void setPlaylist(List<Song> newPlaylist) {
-    _playlist = newPlaylist;
+    if (_isStreaming) {
+      _streamPlaylist = newPlaylist;
+    }
+    else {
+      _playlist = newPlaylist;
+    }
     notifyListeners();
   }
 

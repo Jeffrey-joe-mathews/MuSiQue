@@ -23,9 +23,9 @@ class _SongBarState extends State<SongBar> {
   Widget build(BuildContext context) {
     return Consumer<PlaylistProvider>(
       builder:(context, value, child) {
-        if (value.playlist.isEmpty) return SizedBox();
+        if (value.activeList.isEmpty) return SizedBox();
 
-        final currentSong = value.playlist[value.currentSongIndex ?? 0];
+        final currentSong = value.activeList[value.currentSongIndex ?? 0];
 
         return GestureDetector(
           onHorizontalDragEnd: (details) {

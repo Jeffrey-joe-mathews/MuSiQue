@@ -24,6 +24,8 @@ class _PlaylistPageState extends State<PlaylistPage> {
   
   // go to song
   void goToSong (int songIndex) {
+    Provider.of<PlaylistProvider>(context, listen: false).enableStreamingMode(false);
+    // Provider.of<PlaylistProvider>(context, listen: false).
     // update current song index
     Provider.of<PlaylistProvider>(context, listen: false).currentSongIndex = songIndex;
     // navigate to song page with updated data

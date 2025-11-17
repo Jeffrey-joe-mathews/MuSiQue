@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     HomeScreen(),
     SearchPage(),
-    PlaylistPage(),
+    // PlaylistPage(),
     SettingsPage(),
   ];
 
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
         tabs: [
           GButton(icon: Icons.home_outlined, text: "H O M E"),
           GButton(icon: Icons.search_outlined, text: "S E A R C H"),
-          GButton(icon: Icons.album, text: "L I B R A R Y"),
+          // GButton(icon: Icons.album, text: "L I B R A R Y"),
           GButton(icon: Icons.settings_outlined, text: "S E T T I N G S"),
         ],
       ),
